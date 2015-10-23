@@ -2,41 +2,63 @@ package chatsingola;
 import java.io.*;
 
 public class VicePreside {
-    private String nomeFile="Professore.txt";
+    private String name;
     private String riga;
-    private FileReader reader;
-    private FileWriter writer;
-    private StreamTokenizer t;
     
-    public VicePreside(String nomeFile, FileReader reader)
+    
+    public VicePreside(String nomeFile)
     {
-        this.nomeFile=nomeFile;
-        try{
-        reader= new FileReader(nomeFile);
-        }catch(FileNotFoundException e){
-            System.out.println("File non Trovato");
-        }
+        this.name=nomeFile;
     }
     
-    public void scrivi(String mess) throws IOException
+    public void scrivi() 
     {
-        writer=new FileWriter(nomeFile);
+        InputStreamReader input=new InputStreamReader(System.in);
+       BufferedReader tastiera=new BufferedReader(input);
+       String nRighe="";
+       int riga;
+       try{
+           System.out.print("Vice Preside: ");
+           String mex= tastiera.readLine();
+           
+           FileReader reader=new FileReader(name);
+           BufferedReader buffer1= new BufferedReader(reader);
+           
+           nRighe=buffer1.readLine();
+          // riga=Integer.parseInt(nRighe);
+          // riga++;
+           
+           FileOutputStream out= new FileOutputStream(name);
+           PrintStream print= new PrintStream(out);
+           print.append(mex);
+           }
+           catch(IOException e)
+           {
+              System.out.println("Errore in scrittura");
+           }
+           
     }
-    
-    public String leggi() throws IOException
-    {
-        t=new StreamTokenizer(reader);
-        t.whitespaceChars('\0', ';');
-        int res=-1;
-        String mess;
-        do{
-           try{
-                res=t.nextToken();
-           }catch(IOException e){}
-        mess=t.sval;
-            
-        }while(res!=StreamTokenizer.TT_EOL && res!=StreamTokenizer.TT_EOF);
-       reader.close();
-        return mess;
-    }
-}
+
+    public void leggi() 
+     {
+         try{
+             FileReader reader= new FileReader(name);
+             BufferedReader buffer = new BufferedReader(reader);
+
+             while(true)
+             {
+                 String stringa= buffer.readLine();
+                 if(stringa==null)break;
+                 else
+                 {
+                 System.out.print("Professore: ");
+                 System.out.println(stringa);
+                 }
+             }
+             reader.close();
+         }catch(IOException e)
+         {
+             System.out.println("Errore in lettura");
+         }
+     }
+ }
