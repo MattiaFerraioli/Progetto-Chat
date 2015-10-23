@@ -22,8 +22,6 @@ public class ChatSingola {
        p.scrivi();
        p.leggi();
        
-       
-       
     }
     
 }
